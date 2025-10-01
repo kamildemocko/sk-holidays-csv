@@ -12,8 +12,8 @@ type Response struct {
 		Code int `json:"code"`
 	} `json:"meta"`
 	Response struct {
-		Holidays Holiday `json:"response"`
-	}
+		Holidays []Holiday `json:"holidays"`
+	} `json:"response"`
 }
 
 type Holiday struct {
@@ -45,5 +45,5 @@ func GetCurrentHolidays(api_key, year string) (Response, error) {
 	var data Response
 	err = json.Unmarshal(bytes, &data)
 
-	return Response{}, nil
+	return data, nil
 }

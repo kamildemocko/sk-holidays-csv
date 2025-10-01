@@ -19,7 +19,7 @@ func main() {
 
 	h, err := calendarific.GetCurrentHolidays(apiKey, thisYear)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("Error: ", err)
 		os.Exit(1)
 	}
 
