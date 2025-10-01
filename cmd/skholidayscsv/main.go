@@ -7,6 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/kamildemocko/sk-holidays-csv/internal/calendarific"
+	"github.com/kamildemocko/sk-holidays-csv/internal/tabularize"
 )
 
 func init() {
@@ -23,5 +24,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("%+v", h)
+	outPath := "output.csv"
+	err = tabularize.SaveHolidaysToCSV(h, outPath)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
 }
