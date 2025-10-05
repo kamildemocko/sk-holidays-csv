@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/kamildemocko/sk-holidays-csv/internal/calendarific"
@@ -18,10 +18,13 @@ func main() {
 	parseArgs()
 
 	apiKey := os.Getenv("api_key")
-	thisYear := time.Now().Format("2006")
 
 	fmt.Println("getting calendar")
-	h, err := calendarific.GetCurrentHolidays(apiKey, thisYear)
+	h, err := calendarific.GetCurrentHolidays(
+		apiKey,
+		strings.ToUpper(*country),
+		*year,
+	)
 	if err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)

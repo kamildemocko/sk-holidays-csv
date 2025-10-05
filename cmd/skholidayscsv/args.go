@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 var output = flag.String("o", "", "Output dir with filename for CSV, \nExample: -o C:\\programs\\cal\\output.csv")
 var delimiter = flag.String("d", ",", "Used delimiter, default: ','")
+var country = flag.String("c", "SK", "Country, default: 'SK'")
+var year = flag.String("y", "", "Year, default: current year")
 
 func parseArgs() {
 	flag.Parse()
@@ -47,5 +50,15 @@ func validateArgs() {
 		fmt.Println("Delimiter must be a single character")
 		flag.Usage()
 		os.Exit(1)
+	}
+
+	if len(*country) != 2 {
+		fmt.Println("Country must be a code of 2 characters")
+		flag.Usage()
+		os.Exit(1)
+	}
+
+	if *year == "" {
+		*year = time.Now().Format("2006")
 	}
 }

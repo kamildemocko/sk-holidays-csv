@@ -26,8 +26,8 @@ type Holiday struct {
 	CanonicalURL string `json:"canonical_url"`
 }
 
-func GetCurrentHolidays(api_key, year string) ([]Holiday, error) {
-	response, err := http.Get(fmt.Sprintf("https://calendarific.com/api/v2/holidays?api_key=%s&country=SK&year=%s", api_key, year))
+func GetCurrentHolidays(api_key, country, year string) ([]Holiday, error) {
+	response, err := http.Get(fmt.Sprintf("https://calendarific.com/api/v2/holidays?api_key=%s&country=%s&year=%s", api_key, country, year))
 	if err != nil {
 		return []Holiday{}, err
 	}
@@ -44,6 +44,10 @@ func GetCurrentHolidays(api_key, year string) ([]Holiday, error) {
 
 	var data Response
 	err = json.Unmarshal(bytes, &data)
+
+	if len(data.Response.Holidays) == 0 {
+		return []Holiday{}, fmt.Errorf("no data from Calendarific API, verify country code and year\n")
+	}
 
 	return data.Response.Holidays, nil
 }
