@@ -13,6 +13,7 @@ import (
 )
 
 var output = flag.String("o", "", "Output dir with filename for CSV, \nExample: -o C:\\programs\\cal\\output.csv")
+var delimiter = flag.String("d", ",", "Used delimiter, default: ','")
 
 func init() {
 	_ = godotenv.Load(".env")
@@ -46,6 +47,12 @@ func parseArgs() {
 		flag.Usage()
 		os.Exit(1)
 	}
+
+	if len(*delimiter) != 1 {
+		fmt.Println("Delimiter must be a single character")
+		flag.Usage()
+		os.Exit(1)
+	}
 }
 
 func main() {
@@ -62,7 +69,7 @@ func main() {
 	}
 
 	fmt.Println("saving CSV file")
-	err = tabularize.SaveHolidaysToCSV(h, *output)
+	err = tabularize.SaveHolidaysToCSV(h, *output, []rune(*delimiter)[0])
 	if err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)

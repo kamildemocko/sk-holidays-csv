@@ -7,7 +7,7 @@ import (
 	"github.com/kamildemocko/sk-holidays-csv/internal/calendarific"
 )
 
-func SaveHolidaysToCSV(holidays []calendarific.Holiday, filename string) error {
+func SaveHolidaysToCSV(holidays []calendarific.Holiday, filename string, delimiter rune) error {
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
@@ -16,6 +16,7 @@ func SaveHolidaysToCSV(holidays []calendarific.Holiday, filename string) error {
 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
+	writer.Comma = delimiter
 
 	header := []string{"name", "description", "date", "primary_type", "url"}
 	err = writer.Write(header)
