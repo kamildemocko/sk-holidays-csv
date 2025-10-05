@@ -1,4 +1,4 @@
-# SK Holidays to CSV
+# Holidays to CSV
 
 A simple Go application that fetches Slovak holidays from the Calendarific API and saves them as CSV.
 
